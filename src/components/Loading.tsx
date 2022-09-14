@@ -5,9 +5,9 @@ export default function Loading() {
     <div className='min-h-screen flex justify-center items-center'>
       <div>
         <div className="w-full p-2 font-anton text-3xl">
-          Pomodro timer app
+          Pomodro Timer App
         </div>
-        <div>
+        <div className='flex justify-center items-center'>
           <img src={loadingsvg} alt="Loading"/>
         </div>
       </div>

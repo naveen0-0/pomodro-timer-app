@@ -1,27 +1,32 @@
 import { useState, useContext, useEffect } from "react"
 import { AuthContext } from "../context/AuthContext";
-
+import playimg from '../images/play.png'
+import pauseimg from '../images/pause.png'
+import resetimg from '../images/reset.png'
 
 export default function HomePage() {
   const { user, signout } = useContext(AuthContext)
-  const [ minutes, setMinutes ] = useState(1)
+  const [ minutes, setMinutes ] = useState(25)
   const [ seconds, setSeconds ] = useState(0)
-  const [ timerDone, setTimerDone ] = useState(false);
   const [ timerStarted, setTimerStarted ] = useState(false)
+  const [ breakTimerStarted, setBreakTimerStarted ] = useState(false)
 
+  
   let interval: string | number | NodeJS.Timer | undefined;
-
   useEffect(()=>{
     if(timerStarted){
       interval = setInterval(() => {
         if(seconds>0){
           setSeconds(seconds-1)
         }
-  
         if(seconds === 0){
           if(minutes===0){
             clearInterval(interval)
-            setTimerDone(true)
+            setTimerStarted(false)
+            setBreakTimerStarted(true)
+            setMinutes(5)
+            setSeconds(0)
+            console.log("Normal Timer Dones");
           }else{
             setSeconds(59)
             setMinutes(minutes-1)
@@ -29,9 +34,32 @@ export default function HomePage() {
         }
       },1000)
     }
-
     return () => clearInterval(interval)
   },[timerStarted, seconds, minutes])
+
+
+  useEffect(()=>{
+    if(breakTimerStarted){
+      interval = setInterval(() => {
+        if(seconds>0){
+          setSeconds(seconds-1)
+        }
+        if(seconds === 0){
+          if(minutes===0){
+            clearInterval(interval)
+            setTimerStarted(true)
+            setBreakTimerStarted(false)
+            setMinutes(25)
+            setSeconds(0)
+          }else{
+            setSeconds(59)
+            setMinutes(minutes-1)
+          }
+        }
+      },1000)
+    }
+    return () => clearInterval(interval)
+  },[breakTimerStarted, seconds, minutes])
 
   const startTimer = () => setTimerStarted(true)
   const pauseTimer = () => setTimerStarted(false)
@@ -54,32 +82,40 @@ export default function HomePage() {
       </div>
 
       <div
-        className="flex flex-col justify-center items-center flex-1 bg-slate-900 m-4 min-h-[200px]"
+        className={`flex flex-col justify-center items-center flex-1 bg-slate-900 m-4 min-h-[200px] ${timerStarted && 'bg-green-800'} ${breakTimerStarted&& 'bg-red-800'}`}
       >
-        <div className=" text-6xl sm:text-9xl font-anton text-white my-2">
+        <div className="text-white font-roboto text-3xl">
+          {timerStarted && "Normal Timer"}
+          {breakTimerStarted && "Break Timer"}
+        </div>
+
+        <div className="text-5xl sm:text-8xl font-anton text-white my-2 flex justify-center items-center p-4">
           {minutes<10? `0${minutes}`:minutes} : {seconds<10? `0${seconds}`:seconds}
         </div>
 
         <div className="my-2 w-full p-2 flex justify-around items-center">
           <button
             onClick={startTimer}
-            className="bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 font-roboto rounded-full"
+            className="aspect-square bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 font-roboto rounded-full"
           >
-            Start
+            <img src={playimg} alt="Play" className="w-4"/>
           </button>
           <button 
             onClick={pauseTimer}
-            className="bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 font-roboto rounded-full"
+            className="aspect-square bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 font-roboto rounded-full"
           >
-            Pause
+            <img src={pauseimg} alt="Pause" className="w-4"/>
           </button>
           <button
             onClick={resetTimer}
-            className="bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 font-roboto rounded-full"
+            className="aspect-square bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 font-roboto rounded-full"
           >
-            Reset
+            <img src={resetimg} alt="Reset" className="w-4"/>
           </button>
+
         </div>
+
+
       </div>
 
     </div>
