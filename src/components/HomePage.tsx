@@ -73,8 +73,8 @@ export default function HomePage() {
   return (
     <div className="bg-slate-400 min-h-screen flex flex-col">
 
-      <div className="flex justify-around items-center bg-slate-900 font-roboto p-2 text-white shadow-md shadow-slate-700">
-        <div>{user.email}</div>
+      <div className="min-h-24 sm:h-full flex flex-col sm:flex-row justify-around items-center bg-slate-900 font-roboto p-2 text-white shadow-md shadow-slate-700">
+        <div className="break-all">{user.email}</div>
         <button 
           className="px-4 py-1 font-roboto rounded-full bg-red-700 shadow-sm shadow-slate-700 hover:bg-red-900"
           onClick={signout}
@@ -82,18 +82,14 @@ export default function HomePage() {
       </div>
 
       <div
-        className={`flex flex-col justify-center items-center flex-1 bg-slate-900 m-4 min-h-[200px] ${timerStarted && 'bg-green-800'} ${breakTimerStarted&& 'bg-red-800'}`}
+        className={`flex flex-col justify-center items-center flex-1 bg-slate-900 m-4 min-h-[200px] ${timerStarted && 'bg-green-800'} ${breakTimerStarted&& 'bg-red-800'} shadow-md shadow-slate-700 rounded-md`}
       >
-        <div className="text-white font-roboto text-3xl">
-          {timerStarted && "Normal Timer"}
-          {breakTimerStarted && "Break Timer"}
-        </div>
 
-        <div className="text-5xl sm:text-8xl font-anton text-white my-2 flex justify-center items-center p-4">
+        <div className="text-5xl sm:text-8xl font-anton text-white my-2 flex justify-center items-center p-4 text-center">
           {minutes<10? `0${minutes}`:minutes} : {seconds<10? `0${seconds}`:seconds}
         </div>
 
-        <div className="my-2 w-full p-2 flex justify-around items-center">
+        <div className="my-2 w-full p-2 flex justify-around items-center flex-col sm:flex-row h-60 sm:h-max">
           <button
             onClick={startTimer}
             className="aspect-square bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 font-roboto rounded-full"
