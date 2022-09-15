@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import playimg from '../images/play.png'
 import pauseimg from '../images/pause.png'
 import resetimg from '../images/reset.png'
+import logoutimg from '../images/logout.png'
 
 export default function HomePage() {
   const { user, signout } = useContext(AuthContext)
@@ -73,12 +74,14 @@ export default function HomePage() {
   return (
     <div className="bg-slate-400 min-h-screen flex flex-col">
 
-      <div className="min-h-24 sm:h-full flex flex-col sm:flex-row justify-around items-center bg-slate-900 font-roboto p-2 text-white shadow-md shadow-slate-700">
+      <div className="min-h-[100px] sm:min-h-full flex flex-col sm:flex-row justify-around items-center bg-slate-900 font-roboto p-2 text-white shadow-md shadow-slate-700">
         <div className="break-all">{user.email}</div>
         <button 
-          className="px-4 py-1 font-roboto rounded-full bg-red-700 shadow-sm shadow-slate-700 hover:bg-red-900"
           onClick={signout}
-        >signout</button>
+          title="Signout"
+        >
+          <img src={logoutimg} alt="Logout" className="w-8"/>
+        </button>
       </div>
 
       <div
@@ -92,19 +95,22 @@ export default function HomePage() {
         <div className="my-2 w-full p-2 flex justify-around items-center flex-col sm:flex-row h-60 sm:h-max">
           <button
             onClick={startTimer}
-            className="aspect-square bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 font-roboto rounded-full"
+            title="Start"
+            className="aspect-square bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 rounded-full"
           >
             <img src={playimg} alt="Play" className="w-4"/>
           </button>
           <button 
             onClick={pauseTimer}
-            className="aspect-square bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 font-roboto rounded-full"
+            title="Pause"
+            className="aspect-square bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 rounded-full"
           >
             <img src={pauseimg} alt="Pause" className="w-4"/>
           </button>
           <button
             onClick={resetTimer}
-            className="aspect-square bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 font-roboto rounded-full"
+            title="Reset"
+            className="aspect-square bg-indigo-400 shadow-md shadow-slate-800 px-4 py-1 rounded-full"
           >
             <img src={resetimg} alt="Reset" className="w-4"/>
           </button>

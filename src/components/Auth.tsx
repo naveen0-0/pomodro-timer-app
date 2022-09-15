@@ -4,6 +4,7 @@ import googleimg from '../images/google.png'
 import Register from "./Register";
 import Login from "./Login";
 
+
 export default function Auth() {
   const { googleSignIn } = useContext(AuthContext)
   const [ showLoginPage, setShowLoginPage ] = useState(false);
